@@ -1,6 +1,6 @@
 echo off
 cls
-echo --€¬п Є®¬ЇмовҐа :    %computername%
-echo --„ в  Ё ўаҐ¬п:      %date% %time%
-echo --€¬п Ї®«м§®ў вҐ«п:  %username%
+echo --РРјСЏ РєРѕРјРїСЊСЋС‚РµСЂР°:    %computername%
+echo --Р”Р°С‚Р° Рё РІСЂРµРјСЏ:      %date% %time%
+echo --РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ:  %username%
 pause
