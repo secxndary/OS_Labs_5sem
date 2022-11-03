@@ -17,7 +17,7 @@ void* ChildThread_T1(void* arg)
 	pid_t tid = syscall(SYS_gettid);
 	for (int i = 1; i <= 75; ++i)
 	{
-		printf("%d. PID = %d      [CHILD]   TID = %d\n", i, pid, tid);
+		printf("%d. PID = %d      [CHILD]  TID = %d\n", i, pid, tid);
 		sleep(1);
 	}
 	pthread_exit("Child thread");
@@ -35,7 +35,7 @@ int main()
 
 	for (int i = 1; i <= 100; ++i)
 	{
-		printf("%d. PID = %d      [PARENT]  TID = %d\n", i, pid, tid);
+		printf("%d. PID = %d      [MAIN]   TID = %d\n", i, pid, tid);
 		sleep(1);
 	}
 
