@@ -16,7 +16,6 @@ DWORD WINAPI ChildThread_T1()
 		Sleep(1000);
 		if (i == 25)
 			Sleep(10000);
-
 	}
 	return 0;
 }
