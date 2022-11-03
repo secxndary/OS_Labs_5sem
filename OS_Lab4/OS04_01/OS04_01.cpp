@@ -13,6 +13,7 @@ int main()
 		cout << i << ". PID = " << pid << "       TID = " << tid << "\n";
 		Sleep(1000);
 	}
+	system("pause");
 	return 0;
 }
 

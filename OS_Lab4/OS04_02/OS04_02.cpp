@@ -1,20 +1,65 @@
-﻿// OS04_02.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <Windows.h>
+using namespace std;
+DWORD pid = NULL;
 
-#include <iostream>
+
+
+
+DWORD WINAPI ChildThread_T1()
+{
+	DWORD tid = GetCurrentThreadId();
+
+	for (short i = 1; i <= 50; ++i)
+	{
+		cout << i << ". PID = " << pid << "       [CHILD-T1]   TID = " << tid << "\n";
+		Sleep(1000);
+	}
+	return 0;
+}
+
+
+
+
+DWORD WINAPI ChildThread_T2()
+{
+	DWORD tid = GetCurrentThreadId();
+
+	for (short i = 1; i <= 125; ++i)
+	{
+		cout << i << ". PID = " << pid << "       [CHILD-T2]   TID = " << tid << "\n";
+		Sleep(1000);
+	}
+	return 0;
+}
+
+
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	pid = GetCurrentProcessId();
+	DWORD parentId = GetCurrentThreadId();
+	DWORD childId_T1 = NULL;
+	DWORD childId_T2 = NULL;
+	HANDLE handleClild_T1 = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ChildThread_T1, NULL, 0, &childId_T1);
+	HANDLE handleClild_T2 = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ChildThread_T2, NULL, 0, &childId_T2);
+
+
+	for (short i = 1; i <= 100; ++i)
+	{
+		cout << i << ". PID = " << pid << "        [PARENT]    TID = " << parentId << "\n";
+		Sleep(1000);
+	}
+
+
+	WaitForSingleObject(handleClild_T1, INFINITE);
+	WaitForSingleObject(handleClild_T2, INFINITE);
+	CloseHandle(handleClild_T1);
+	CloseHandle(handleClild_T2);
+	system("pause");
+	return 0;
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+// Powershell ISE:	   (Get-Process OS04_02).Threads
