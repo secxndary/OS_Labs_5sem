@@ -8,14 +8,20 @@ int main()
 
 	LPCWSTR OS03_02_1 = L"C:\\Users\\valda\\source\\repos\\semester#5\\ОСИ\\OS_Lab3\\x64\\Debug\\OS03_02_1.exe";
 	LPCWSTR OS03_02_2 = L"C:\\Users\\valda\\source\\repos\\semester#5\\ОСИ\\OS_Lab3\\x64\\Debug\\OS03_02_2.exe";
-	STARTUPINFO si;									// структура для определения внешнего вида окна для нового процесса	(ширина и высота окна, его смещение, заголовок)
+	STARTUPINFO si1;								// структура для определения внешнего вида окна для нового процесса	(ширина и высота окна, его смещение, заголовок)
+	STARTUPINFO si2;								
 	PROCESS_INFORMATION pi1;						// структура с инфой о созданном процессе и его первичном потоке
 	PROCESS_INFORMATION pi2;
-	ZeroMemory(&si, sizeof(STARTUPINFO));			// обнуление памяти STARTUPINFO
-	si.cb = sizeof(STARTUPINFO);					// явное указание размера структуры si в байтах
-	si.dwFlags = STARTF_USEFILLATTRIBUTE;			// флаг для возможности работы dwFillAttribute
-	si.dwFillAttribute = (DWORD)FOREGROUND_GREEN;	// параметр цвета текста
-	si.lpReserved = NULL;							// lpReserved рекомендуется установить в null перед передачей si в CreateProcess
+	ZeroMemory(&si1, sizeof(STARTUPINFO));			// обнуление памяти STARTUPINFO
+	ZeroMemory(&si2, sizeof(STARTUPINFO));			
+	si1.cb = sizeof(STARTUPINFO);					// явное указание размера структуры si в байтах
+	si1.dwFlags = STARTF_USEFILLATTRIBUTE;			// флаг для возможности работы dwFillAttribute
+	si1.dwFillAttribute = (DWORD)FOREGROUND_GREEN;	// параметр цвета текста
+	si1.lpReserved = NULL;							// lpReserved рекомендуется установить в null перед передачей si в CreateProcess
+	si2.cb = sizeof(STARTUPINFO);					
+	si2.dwFlags = STARTF_USEFILLATTRIBUTE;			
+	si2.dwFillAttribute = (DWORD)FOREGROUND_RED;
+	si1.lpReserved = NULL;					
 
 
 	if (CreateProcess(	
@@ -27,13 +33,13 @@ int main()
 		CREATE_NEW_CONSOLE, // dwCreationFlags:		флаги, управляющие приоритетом и параметрами процесса; конкретно этот создает новый инстанс консоли
 		NULL,				// lpEnvironment:		блок конфигурации нового процесса (пары ключ-значение); если null, то конфигурация наследуется от родителя
 		NULL,				// lpCurrentDirectory:	полный путь дочернего процесса; если null, то процесс создается в каталоге родительского процесса
-		&si,				// lpStartupInfo:		структура STARTUPINFO (внешний вид окна)
+		&si1,				// lpStartupInfo:		структура STARTUPINFO (внешний вид окна)
 		&pi1))				// lpProcessInfo:		структура PROCESS_INFORMATION (дескрипторы процесса и первичного потока)
 		cout << "[OK] Process OS03_02_1 was created.\n";
 	else cout << "[ERROR] Process OS03_02_1 was not created.\n";
 
 
-	if (CreateProcess(OS03_02_2, NULL, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi2))
+	if (CreateProcess(OS03_02_2, NULL, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si2, &pi2))
 		cout << "[OK] Process OS03_02_2 was created.\n\n";
 	else cout << "[ERROR] Process OS03_02_2 was not created.\n\n";
 
@@ -45,7 +51,7 @@ int main()
 	}
 
 
-	WaitForSingleObject(pi1.hProcess, INFINITE);	// бесконечно будет ожидаться завершение программы до момента 
+	WaitForSingleObject(pi1.hProcess, INFINITE);	// бесконечно будет ожидаться завершение программы до момента, 
 	WaitForSingleObject(pi2.hProcess, INFINITE);	// пока оба дочерних процесса не пошлют сигнал о завершении работы
 	CloseHandle(pi1.hThread);	// CloseHandle закрывает дескрипторы в структуре PROCESS_INFORMATION
 	CloseHandle(pi2.hThread);		
