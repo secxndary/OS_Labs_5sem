@@ -5,6 +5,9 @@
 #include <pthread.h>
 #include <sys/types.h>
 #include <sys/syscall.h>
+/*  Info about threads:   ps -Lp <PID> H
+						  ps -fL -p <PID> H
+*/
 
 
 
