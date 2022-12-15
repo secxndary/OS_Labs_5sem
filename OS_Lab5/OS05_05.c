@@ -5,6 +5,12 @@
 #include <sys/types.h>
 #include <sched.h>
 
+/*
+ sudo nice -n <nice> <command>  Run with some nice
+ sudo renice -n <nice> -p <pid>  Change nice of running cmd
+
+*/
+
 int main()
 {
     pid_t pid = getpid();

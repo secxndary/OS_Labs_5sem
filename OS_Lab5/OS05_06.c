@@ -5,6 +5,17 @@
 #include <sys/types.h>
 #include <sched.h>
 
+/*
+ Ctrl+Z:  Stop process
+ bg:   Move process to background
+ fg [%n]: Move process [%n] to foreground
+ jobs:  All processes in this bash console
+ kill -9: Terminate process
+ <cmd> &: Start command in bg
+
+ vmstart 5 - command for easier demonstration
+*/
+
 int main()
 {
     pid_t pid = getpid();
