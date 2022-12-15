@@ -32,13 +32,13 @@ void PrintThreadPriority(HANDLE threadHandle)
 
 	switch (threadPriority)
 	{
-		case THREAD_PRIORITY_LOWEST:		cout << "Thread proiority:  THREAD_PRIORITY_LOWEST\n";			break;
-		case THREAD_PRIORITY_BELOW_NORMAL:	cout << "Thread proiority:  THREAD_PRIORITY_BELOW_NORMAL\n";	break;
-		case THREAD_PRIORITY_NORMAL:		cout << "Thread proiority:  THREAD_PRIORITY_NORMAL\n";			break;
-		case THREAD_PRIORITY_ABOVE_NORMAL:	cout << "Thread proiority:  THREAD_PRIORITY_ABOVE_NORMAL\n";	break;
-		case THREAD_PRIORITY_HIGHEST:		cout << "Thread proiority:  THREAD_PRIORITY_HIGHEST\n";			break;
-		case THREAD_PRIORITY_IDLE:			cout << "Thread proiority:  THREAD_PRIORITY_IDLE\n";			break;
-		default:							cout << "[ERROR] Unknown thread priority.\n";					break;
+	case THREAD_PRIORITY_LOWEST:		cout << "Thread proiority:  THREAD_PRIORITY_LOWEST\n";			break;
+	case THREAD_PRIORITY_BELOW_NORMAL:	cout << "Thread proiority:  THREAD_PRIORITY_BELOW_NORMAL\n";	break;
+	case THREAD_PRIORITY_NORMAL:		cout << "Thread proiority:  THREAD_PRIORITY_NORMAL\n";			break;
+	case THREAD_PRIORITY_ABOVE_NORMAL:	cout << "Thread proiority:  THREAD_PRIORITY_ABOVE_NORMAL\n";	break;
+	case THREAD_PRIORITY_HIGHEST:		cout << "Thread proiority:  THREAD_PRIORITY_HIGHEST\n";			break;
+	case THREAD_PRIORITY_IDLE:			cout << "Thread proiority:  THREAD_PRIORITY_IDLE\n";			break;
+	default:							cout << "[ERROR] Unknown thread priority.\n";					break;
 	}
 }
 
@@ -62,7 +62,7 @@ void PrintAffinityMask(HANDLE hp, HANDLE ht) {
 
 	SYSTEM_INFO sys_info;
 	GetSystemInfo(&sys_info);
-	cout << "Max processors count:  " << dec << sys_info.dwNumberOfProcessors << "\n";
+	//cout << "Max processors count:  " << dec << sys_info.dwNumberOfProcessors << "\n";
 	icpu = SetThreadIdealProcessor(ht, MAXIMUM_PROCESSORS);
 	cout << "Thread IdealProcessor: " << dec << icpu << "\n";
 }
@@ -76,17 +76,24 @@ int main()
 	HANDLE threadHandle = GetCurrentThread();
 	DWORD pid = GetCurrentProcessId();
 	DWORD tid = GetCurrentThreadId();
-	
 
 
-	cout << "\n--------------------------------------------\n\n";
-	cout << "Current PID:       " << pid << "\n";
-	cout << "Current TID:       " << tid << "\n";
-	PrintProcessPriority(processHandle);
-	PrintThreadPriority(threadHandle);
-	cout << "\n";
-	PrintAffinityMask(processHandle, threadHandle);
-	cout << "\n--------------------------------------------\n\n\n";
+	for (int i = 0; i < 1000000; i++)
+	{
+		if (i % 1000 == 0)
+		{
+			cout << "\n--------------------------------------------\n\n";
+			cout << "Iteration:         " << i << "\n\n";
+			cout << "Current PID:       " << pid << "\n";
+			cout << "Current TID:       " << tid << "\n";
+			PrintProcessPriority(processHandle);
+			PrintThreadPriority(threadHandle);
+			cout << "\n";
+			PrintAffinityMask(processHandle, threadHandle);
+			cout << "\n--------------------------------------------\n\n\n";
+			Sleep(2);
+		}
+	}
 
 	system("pause");
 }
