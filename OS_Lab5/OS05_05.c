@@ -5,27 +5,15 @@
 #include <sys/types.h>
 #include <sched.h>
 
-int main() 
+int main()
 {
-	pid_t pid = getpid();
-	pid_t tid = gettid();
-	int nicity = nice(0);
-	cpu_set_t set;
-	CPU_ZERO(&set);
-    
-	printf("PID = %d\nTID = %d\nnice = %d\n", pid, tid, nicity);
-    
-	if (sched_getaffinity(0, sizeof(cpu_set_t), &set) == 0)
-	{
-		int is = 0;
-		for (int i = 0; i < CPU_SETSIZE; ++i)
-		{
-			if (CPU_ISSET(i, &set))
-				printf("CPU = %i is set\n", i);
-		} 
+    pid_t pid = getpid();
+    pid_t tid = gettid();
+    int nicity = nice(-20);
+
+    for (int i = 0; i < 10000; ++i)
+    {
+        printf("PID:  %d\nTID:  %d\nNice: %d\n\n", pid, tid, nicity);
+        sleep(1);
     }
-    else
-		printf("[ERROR]: shed_getaffinity returned -1.");
-	
-    exit(0);
 }

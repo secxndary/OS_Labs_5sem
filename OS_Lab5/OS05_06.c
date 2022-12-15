@@ -9,11 +9,10 @@ int main()
 {
     pid_t pid = getpid();
     pid_t tid = gettid();
-    int nicity = nice(-20);
 
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < 1000000; ++i)
     {
-        printf("PID:  %d\nTID:  %d\nNice: %d\n\n", pid, tid, nicity);
+        printf("PID:  %d\nTID:  %d\n\n", pid, tid);
         sleep(1);
     }
 }
