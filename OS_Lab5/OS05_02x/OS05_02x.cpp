@@ -91,7 +91,7 @@ int main()
 			cout << "\n";
 			PrintAffinityMask(processHandle, threadHandle);
 			cout << "\n--------------------------------------------\n\n\n";
-			Sleep(2);
+			Sleep(200);
 		}
 	}
 
