@@ -64,7 +64,6 @@ int main(int argc, char* argv[])
 			si1.cb = sizeof(STARTUPINFO);
 			si2.cb = sizeof(STARTUPINFO);
 
-			// передается путь к os05_02x.exe (имя исполняемого модуля), ..., флаги создания: для процесса создается своя новая консолька + c указанным приоритетом
 			if (CreateProcess(path1, NULL, NULL, NULL, FALSE, CREATE_NEW_CONSOLE | intToProcessPriority(parm2), NULL, NULL, &si1, &pi1))
 				cout << "-- Process os05_02 1 was created\n";
 			else cout << "-- Process os05_02 1 wasn't created\n";
