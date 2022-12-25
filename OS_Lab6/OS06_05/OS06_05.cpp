@@ -33,7 +33,7 @@ int main()
 	// 2. куча заполняется нулями
 	// 3. начальный размер 4 мб
 	// 4. конечный размер ограничен размером виртуальной памяти
-	HANDLE heap = HeapCreate(HEAP_NO_SERIALIZE | HEAP_ZERO_MEMORY, 4096, 0);
+	HANDLE heap = HeapCreate(HEAP_NO_SERIALIZE | HEAP_ZERO_MEMORY, 4096 * 1024, 0);
 	sh(heap);
 
 	int* x1 = (int*)HeapAlloc(heap, HEAP_NO_SERIALIZE | HEAP_ZERO_MEMORY, 300000 * sizeof(int));

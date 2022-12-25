@@ -6,6 +6,15 @@
 #include <sched.h>
 
 
+/*
+	sudo cat /proc/pid/maps
+	pmap -X pid
+	objdump -f ./6.out
+	size -Ax ./6.out
+	.text - секция с кодом (+константы)
+	.data - инициализированные данные
+	.bss  - неинициализированные данные
+*/
 int main()
 {
 	pid_t pid = getpid();
