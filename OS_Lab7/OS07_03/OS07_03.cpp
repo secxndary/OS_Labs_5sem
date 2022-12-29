@@ -56,5 +56,5 @@ int main()
 	CloseHandle(mutex);
 	cout << '\n';
 	system("pause");
-	return EXIT_SUCCESS;
+	return 0;
 }

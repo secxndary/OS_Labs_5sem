@@ -77,6 +77,6 @@ int main()
 		CloseHandle(threads[i]);
 
 	DeleteCriticalSection(&critical_section);
-	return EXIT_SUCCESS;
+	return 0;
 }
 
