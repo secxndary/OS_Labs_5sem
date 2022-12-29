@@ -1,20 +1,82 @@
-﻿// OS07_02.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <windows.h>
+using namespace std;
+CRITICAL_SECTION critical_section;
 
-#include <iostream>
+
+
+
+
+HANDLE createThread(LPTHREAD_START_ROUTINE func, char* thread_name)
+{
+	DWORD thread_id = NULL;
+	HANDLE thread = CreateThread(NULL, 0, func, thread_name, 0, &thread_id);
+
+	if (thread == NULL) 
+		throw "[ERROR] CreateThread";
+
+	return thread;
+}
+
+
+
+
+void WINAPI loop(char* displayed_name) 
+{
+	int pid = GetCurrentProcessId();
+	int tid = GetCurrentThreadId();
+
+	for (int i = 1; i <= 90; ++i)
+	{
+		if (i == 30) 
+			EnterCriticalSection(&critical_section);
+
+		printf("  [%s]\t    %d.   PID = %d\tTID = %u\n", displayed_name, i, pid, tid);
+
+		if (i == 60) 
+			LeaveCriticalSection(&critical_section);
+
+		Sleep(100);
+	}
+
+	cout << "\n================  " << displayed_name << " finished" << "  ================\n\n";
+}
+
+
+
+
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	int pid = GetCurrentProcessId();
+	const int size = 2;
+
+	HANDLE threads[size];
+
+	threads[0] = createThread((LPTHREAD_START_ROUTINE)loop, (char*)"A");
+	threads[1] = createThread((LPTHREAD_START_ROUTINE)loop, (char*)"B");
+
+	InitializeCriticalSection(&critical_section);
+
+	for (int i = 1; i <= 100; ++i)
+	{
+		if (i == 30) 
+			EnterCriticalSection(&critical_section);
+
+		printf("[MAIN]\t    %d.   PID = %d\n", i, pid);
+
+		if (i == 60) 
+			LeaveCriticalSection(&critical_section);
+
+		Sleep(100);
+	}
+
+	WaitForMultipleObjects(size, threads, TRUE, INFINITE);
+	for (int i = 0; i < size; ++i)
+		CloseHandle(threads[i]);
+
+	DeleteCriticalSection(&critical_section);
+	return EXIT_SUCCESS;
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
