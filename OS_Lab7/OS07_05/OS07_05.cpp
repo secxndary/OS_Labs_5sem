@@ -38,7 +38,7 @@ int main()
 
 	for (int i = 1; i <= 90; i++)
 	{
-		if (i == 50) 
+		if (i == 15) 
 			SetEvent(event);
 
 		printf("[OS07_05]\t %d.  PID = %d\n", i, pid);

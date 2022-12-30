@@ -72,6 +72,7 @@ int main()
 		Sleep(100);
 	}
 
+	cout << "\n===============  MAIN finished  ===============\n\n";
 	WaitForMultipleObjects(size, threads, TRUE, INFINITE);
 	for (int i = 0; i < size; ++i)
 		CloseHandle(threads[i]);

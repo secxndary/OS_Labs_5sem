@@ -11,6 +11,9 @@ HANDLE close_timer = CreateWaitableTimer(NULL, FALSE, L"os08_04v2_close");
 
 bool print = false, iterate = true;
 
+
+
+
 int main()
 {
 	LPTHREAD_START_ROUTINE funcs[] = { (LPTHREAD_START_ROUTINE)close_timer_watcher, (LPTHREAD_START_ROUTINE)print_timer_watcher };
@@ -41,7 +44,6 @@ int main()
 		if (print) 
 		{
 			cout << "Time:  " << current_time << "\tIterations: " << i << '\n';
-			//printf("i: %d,\ts: %d\n", i, current_time);
 			print = false;
 		}
 	}
